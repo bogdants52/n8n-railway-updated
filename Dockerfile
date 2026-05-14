@@ -1,11 +1,9 @@
+FROM alpine:latest AS fetcher
+RUN apk add --no-cache wget
+RUN wget -O /yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux_musl && \
+    chmod +x /yt-dlp
+
 FROM n8nio/n8n:latest
-
 USER root
-
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip ffmpeg && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN pip install --break-system-packages -U yt-dlp
-
+COPY --from=fetcher /yt-dlp /usr/local/bin/yt-dlp
 USER node
