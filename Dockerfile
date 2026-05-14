@@ -1,14 +1,11 @@
-FROM python:3.11-slim AS builder
+FROM python:3.11-slim
 
 RUN apt-get update && \
-    apt-get install -y ffmpeg && \
+    apt-get install -y ffmpeg curl && \
     pip install yt-dlp
 
-FROM n8nio/n8n:latest
+RUN npm install -g n8n
 
-USER root
+EXPOSE 5678
 
-COPY --from=builder /usr/local/bin/yt-dlp /usr/local/bin/yt-dlp
-COPY --from=builder /usr/bin/ffmpeg /usr/bin/ffmpeg
-
-USER node
+CMD ["n8n"]
