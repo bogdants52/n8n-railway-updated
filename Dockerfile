@@ -1,6 +1,6 @@
 FROM alpine:latest AS fetcher
 RUN apk add --no-cache wget
-RUN wget -O /yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux_musl && \
+RUN wget -O /yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_musllinux && \
     chmod +x /yt-dlp
 
 FROM n8nio/n8n:latest
