@@ -1,11 +1,7 @@
-FROM python:3.11-slim
+FROM n8nio/n8n:latest
 
-RUN apt-get update && \
-    apt-get install -y ffmpeg curl && \
-    pip install yt-dlp
+USER root
 
-RUN npm install -g n8n
+COPY --from=ghcr.io/yt-dlp/yt-dlp:latest /usr/local/bin/yt-dlp /usr/local/bin/yt-dlp
 
-EXPOSE 5678
-
-CMD ["n8n"]
+USER node
